@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Address Books</title>
+</head>
+<body>
+<h1>Address Books</h1>
+
+<!-- Iterate over address books -->
+<div th:each="addressBook : ${addressBooks}">
+    <h2 th:text="${addressBook.id}">Address Book</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Phone Number</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Iterate over buddies for each address book using getBuddy method -->
+        <tr th:each="index : ${#numbers.sequence(0, addressBook.getNumBuddies() - 1)}">
+            <td th:text="${addressBook.getBuddy(index).getName()}"></td>
+            <td th:text="${addressBook.getBuddy(index).getPhoneNumber()}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
