@@ -4,11 +4,26 @@
     <title>Address Books</title>
 </head>
 <body>
+
+<form th:action="@{/addAddressBook}" th:object="${newAddressBook}" method="post">
+    <button type="submit">Create New Address Book</button>
+</form>
+
+
 <h1>Address Books</h1>
 
 <!-- Iterate over address books -->
 <div th:each="addressBook : ${addressBooks}">
     <h2 th:text="${addressBook.id}">Address Book</h2>
+
+    <form th:action="@{/addBuddyInfo}" th:object="${newBuddyInfo}" method="post">
+        <input type="hidden" name="addressBookId" th:value="${addressBook.id}" />
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" th:field="*{name}" />
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="text" id="phoneNumber" name="phoneNumber" th:field="*{phoneNumber}" />
+        <button type="submit">Add Buddy Info</button>
+    </form>
 
     <table>
         <thead>
@@ -19,7 +34,7 @@
         </thead>
         <tbody>
         <!-- Iterate over buddies for each address book using getBuddy method -->
-        <tr th:each="index : ${#numbers.sequence(0, addressBook.getNumBuddies() - 1)}">
+        <tr th:if="${addressBook.getNumBuddies() > 0}" th:each="index : ${#numbers.sequence(0, addressBook.getNumBuddies() - 1)}">
             <td th:text="${addressBook.getBuddy(index).getName()}"></td>
             <td th:text="${addressBook.getBuddy(index).getPhoneNumber()}"></td>
         </tr>
